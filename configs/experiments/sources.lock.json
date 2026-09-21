@@ -1,0 +1,9 @@
+{
+  "paper_sha256": "532141f5baa99adde3914d7c49b3afdc7ae64aa7dfa0dc5891875f23ba126832",
+  "m2rl_repo": "https://github.com/Mosi-AI/M2RL",
+  "m2rl_revision": "c94ce97ce7f2e0f2800e6dd8c20667f00ca223d4",
+  "dataset_repo": "nvidia/Nemotron-3-Nano-RL-Training-Blend",
+  "dataset_revision": "ffd169f2b74bb492ec607d64bd56f7435054972b",
+  "dataset_bytes": 6924505168,
+  "dataset_published_sha256": "3c027483436670a3814a39433dc65938a3ef06923e680f26ee293831e5100cb7"
+}

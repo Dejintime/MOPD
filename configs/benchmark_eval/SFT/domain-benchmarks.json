@@ -1,0 +1,17 @@
+{
+  "student": "",
+  "output": "analysis/2026-09-16-domain-benchmarks-16k-concise",
+  "enable_thinking": true,
+  "max_new_tokens": 16384,
+  "seed": 42,
+  "batch_size": 13,
+  "rollout_system_prompt": "Solve the task with concise, complete reasoning. Use one focused approach and include only essential steps. Do not repeat arguments, restate prior steps, or explore alternatives after reaching a solution. Perform at most one brief check, then give the final answer in the exact format requested. For math, use \\boxed{...} when appropriate. For code, provide a complete runnable solution. End when the answer is complete.",
+  "sampling": {"temperature": 0.6, "top_p": 0.95, "top_k": 20, "min_p": 0.0, "repetition_penalty": 1.0},
+  "vllm": {"dtype": "bfloat16", "tensor_parallel_size": 1, "max_model_len": 24576, "gpu_memory_utilization": 0.94, "max_num_seqs": 13, "max_num_batched_tokens": 4096, "enforce_eager": true, "generation_config": "vllm", "enable_prefix_caching": false},
+  "datasets": [
+    {"name": "lcb_release_v5", "path": "data/eval/processed/lcb_release_v5.jsonl", "n": 880},
+    {"name": "gpqa_diamond", "path": "data/eval/processed/gpqa_diamond.jsonl", "n": 198},
+    {"name": "ifeval", "path": "data/eval/processed/ifeval.jsonl", "n": 541},
+    {"name": "ifbench", "path": "data/eval/processed/ifbench.jsonl", "n": 300}
+  ]
+}

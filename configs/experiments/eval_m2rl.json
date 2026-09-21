@@ -1,0 +1,61 @@
+{
+  "reference": "Mosi-AI/M2RL",
+  "reference_revision": "c94ce97ce7f2e0f2800e6dd8c20667f00ca223d4",
+  "purpose": "frozen_evaluation_only",
+  "evaluation_launched": false,
+  "notes": [
+    "Raw data are pinned; M2RL does not provide a complete nine-benchmark test-ID manifest.",
+    "Default LCB datasets use the official cumulative release_v5/release_v6 definitions. Increment-only and bundled Gym filename-derived window views are retained separately; M2RL full test-ID manifest is not published.",
+    "Agent/BFCL excluded at user request on 2026-09-13."
+  ],
+  "datasets": [
+    {
+      "name": "AIME24",
+      "path": "data/eval/processed/aime24.jsonl",
+      "domain": "math"
+    },
+    {
+      "name": "AIME25",
+      "path": "data/eval/processed/aime25.jsonl",
+      "domain": "math"
+    },
+    {
+      "name": "LiveCodeBench-v5",
+      "path": "data/eval/processed/lcb_release_v5.jsonl",
+      "domain": "code"
+    },
+    {
+      "name": "LiveCodeBench-v6",
+      "path": "data/eval/processed/lcb_release_v6.jsonl",
+      "domain": "code"
+    },
+    {
+      "name": "HLE-text",
+      "path": "data/eval/processed/hle_text.jsonl",
+      "domain": "science"
+    },
+    {
+      "name": "GPQA-Diamond",
+      "path": "data/eval/processed/gpqa_diamond.jsonl",
+      "domain": "science"
+    },
+    {
+      "name": "IFEval",
+      "path": "data/eval/processed/ifeval.jsonl",
+      "domain": "if"
+    },
+    {
+      "name": "IFBench",
+      "path": "data/eval/processed/ifbench.jsonl",
+      "domain": "if"
+    }
+  ],
+  "example_only_sampling_from_m2rl_eval_multi_task_yaml": {
+    "AIME24": 16,
+    "GPQA-Diamond": 2,
+    "IFBench": 1,
+    "max_response_len": 16384,
+    "top_p": 0.7
+  },
+  "published_nine_benchmark_decoding_parameters": "not fully available in released repository; configure before comparing scores"
+}

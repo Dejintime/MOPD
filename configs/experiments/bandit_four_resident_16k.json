@@ -1,0 +1,81 @@
+{
+  "student": "/home/yangdejin/.cache/huggingface/hub/M2RL-SFT",
+  "teachers": [
+    {
+      "name": "M2RL-Math",
+      "domain": "math",
+      "path": "/home/yangdejin/.cache/huggingface/hub/M2RL-Math"
+    },
+    {
+      "name": "M2RL-Coding",
+      "domain": "code",
+      "path": "/home/yangdejin/.cache/huggingface/hub/M2RL-Coding"
+    },
+    {
+      "name": "M2RL-Science",
+      "domain": "science",
+      "path": "/home/yangdejin/.cache/huggingface/hub/M2RL-Science"
+    },
+    {
+      "name": "M2RL-IF",
+      "domain": "if",
+      "path": "/home/yangdejin/.cache/huggingface/hub/M2RL-IF"
+    }
+  ],
+  "student_device": "cuda:0",
+  "teacher_device": "cpu",
+  "mode": "bandit",
+  "k": 2,
+  "alpha": 0.5,
+  "rho": 0.99,
+  "diversity": 0.1,
+  "selection_cost": 0.001,
+  "kl_gate": 10.0,
+  "beta": 1.0,
+  "epsilon": 0.05,
+  "top_k": 64,
+  "lr": 2e-06,
+  "grad_clip": 1.0,
+  "seed": 42,
+  "steps": 100,
+  "max_prompt_tokens": 1024,
+  "max_new_tokens": 16384,
+  "temperature": 1.0,
+  "train_data": "data/processed/nemotron-clean/train.jsonl",
+  "domain_filter": [
+    "math",
+    "code",
+    "science",
+    "if"
+  ],
+  "reward": {
+    "distill": 1.0,
+    "stability": 0.1,
+    "cost": 0.0,
+    "redundancy": 0.05
+  },
+  "cpu_threads": 10,
+  "save_optimizer": false,
+  "save_student": true,
+  "output": "results/bandit-four-resident-16k",
+  "smoke": false,
+  "teacher_dtype": "float32",
+  "micro_batch_size": 1,
+  "gradient_accumulation_steps": 2,
+  "save_steps": 50,
+  "context": {
+    "schema": "paper_eq9_v1",
+    "domain_estimator": "hashed_multinomial_nb",
+    "hash_bins": 32768,
+    "smoothing": 1.0,
+    "domain_prior": "uniform",
+    "advantage": "mean_log_probability_difference",
+    "agreement": "mean_pairwise_bhattacharyya",
+    "cost": "relative_excess_prefill"
+  },
+  "memory_backend": "chunked",
+  "prefill_chunk_tokens": 512,
+  "logit_chunk_tokens": 128,
+  "host_memory_reserve_gib": 6,
+  "max_consecutive_empty_batches": 8
+}

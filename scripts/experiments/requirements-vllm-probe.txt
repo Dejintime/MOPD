@@ -1,0 +1,7 @@
+# Install directly into the existing mopd environment; NVIDIA driver 575 supports CUDA 12.9.
+--extra-index-url https://download.pytorch.org/whl/cu129
+https://wheels.vllm.ai/0decac0d96c42b49572498019f0a0e3600f50398/vllm-0.22.1%2Bcu129-cp38-abi3-manylinux_2_28_x86_64.whl
+torch==2.11.0+cu129
+torchvision==0.26.0+cu129
+torchaudio==2.11.0+cu129
+transformers==5.16.1

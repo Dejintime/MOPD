@@ -1,0 +1,91 @@
+{
+  "student": "/root/autodl-fs/models/M2RL-SFT",
+  "teachers": [
+    {
+      "name": "M2RL-Math",
+      "domain": "math",
+      "path": "/root/autodl-fs/models/M2RL-Math"
+    },
+    {
+      "name": "M2RL-Coding",
+      "domain": "code",
+      "path": "/root/autodl-fs/models/M2RL-Coding"
+    },
+    {
+      "name": "M2RL-Science",
+      "domain": "science",
+      "path": "/root/autodl-fs/models/M2RL-Science"
+    },
+    {
+      "name": "M2RL-IF",
+      "domain": "if",
+      "path": "/root/autodl-fs/models/M2RL-IF"
+    }
+  ],
+  "student_device": "cuda:0",
+  "teacher_device": "cpu",
+  "mode": "bandit",
+  "k": 2,
+  "alpha": 0.5,
+  "rho": 0.99,
+  "diversity": 0.1,
+  "selection_cost": 0.001,
+  "kl_gate": 10.0,
+  "beta": 10.0,
+  "epsilon": 0.05,
+  "top_k": 64,
+  "lr": 2e-06,
+  "grad_clip": 1.0,
+  "seed": 42,
+  "steps": 100,
+  "max_prompt_tokens": 1024,
+  "max_new_tokens": 8192,
+  "temperature": 1.0,
+  "train_data": "data/processed/nemotron-clean/train.jsonl",
+  "domain_filter": [
+    "math",
+    "code",
+    "science",
+    "if"
+  ],
+  "reward": {
+    "distill": 1.0,
+    "stability": 0.1,
+    "cost": 0.0,
+    "redundancy": 0.05
+  },
+  "cpu_threads": 25,
+  "save_optimizer": false,
+  "save_student": true,
+  "output": "/root/autodl-fs/models/bandit-four-vllm-8k-m2-a2-domain-accounts-100steps-20260919",
+  "smoke": false,
+  "teacher_dtype": "bfloat16",
+  "micro_batch_size": 2,
+  "gradient_accumulation_steps": 2,
+  "save_steps": 50,
+  "context": {
+    "schema": "paper_eq9_v1",
+    "domain_estimator": "hashed_multinomial_nb",
+    "hash_bins": 32768,
+    "smoothing": 1.0,
+    "domain_prior": "uniform",
+    "advantage": "mean_log_probability_difference",
+    "agreement": "mean_pairwise_bhattacharyya",
+    "cost": "relative_excess_prefill"
+  },
+  "memory_backend": "chunked",
+  "prefill_chunk_tokens": 512,
+  "logit_chunk_tokens": 128,
+  "host_memory_reserve_gib": 5,
+  "max_consecutive_empty_batches": 8,
+  "inference_backend": "vllm",
+  "enable_thinking": false,
+  "rollout_system_prompt": "Solve the task accurately with concise thinking. Your total generation budget is 8192 tokens, including thinking and the final answer. Use one focused solution path. Avoid repeated derivations, repeated checks, alternative attempts, and restarting the solution. Aim to keep thinking within 4096 tokens and reserve the remaining space for a complete final answer. Once the answer is established, end the thinking section and give the final answer in the exact format requested. For code, provide a complete runnable solution, preserve any required function signature, and close the code block. For math and multiple-choice questions, clearly state the final answer in the requested format. For instruction-following tasks, keep the final answer limited to the requested deliverable. Do not mention these budget instructions. Stop when the final answer is complete.",
+  "vllm": {
+    "gpu_memory_utilization": 0.2,
+    "max_num_seqs": 4,
+    "max_num_batched_tokens": 4096,
+    "enforce_eager": true
+  },
+  "student_backward_batch_size": 1
+}

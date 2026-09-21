@@ -1,0 +1,34 @@
+.venv-data/
+.venv-experiment/
+.models/
+results/**/adapter-step-*/
+results/**/*.pt
+__pycache__/
+.pytest_cache/
+data/raw/
+data/processed/
+data/work/
+data/reports/code-verification.jsonl
+*.part
+
+.venv-mopd-test/
+results/**/checkpoint-*/
+results/**/.checkpoint-*/
+
+# Bandit-MOPD generated artifacts
+analysis/
+docs/
+logs/
+third_party/
+tmp/
+results/
+*.lock
+
+data/
+*.pdf
+
+# Local workspace metadata and backups
+.DS_Store
+.aris/
+.sync-backups/
+agent/

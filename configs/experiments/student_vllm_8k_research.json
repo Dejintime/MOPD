@@ -1,0 +1,92 @@
+{
+  "experiment_type": "student_inference_probe",
+  "student": "/home/yangdejin/.cache/huggingface/hub/M2RL-SFT",
+  "inference_backend": "vllm",
+  "enable_thinking": false,
+  "max_new_tokens": 8192,
+  "max_prompt_tokens": 1024,
+  "probe_data": "data/processed/nemotron-clean/probe.jsonl",
+  "domains": [
+    "code",
+    "if",
+    "math",
+    "science"
+  ],
+  "samples_per_domain": 3,
+  "seed": 42,
+  "sampling": {
+    "temperature": 1.0,
+    "top_p": 1.0,
+    "top_k": -1,
+    "repetition_penalty": 1.0
+  },
+  "decode_modes": [
+    "greedy",
+    "sampled"
+  ],
+  "vllm": {
+    "dtype": "bfloat16",
+    "tensor_parallel_size": 1,
+    "max_model_len": 10240,
+    "gpu_memory_utilization": 0.8,
+    "max_num_seqs": 4,
+    "max_num_batched_tokens": 4096,
+    "enforce_eager": true,
+    "generation_config": "vllm",
+    "enable_prefix_caching": false
+  },
+  "output": "analysis/2026-09-14-decoding-research",
+  "development_samples": "analysis/2026-09-14-vllm-8k-probe/run/samples.jsonl",
+  "holdout_per_domain": 6,
+  "policies": {
+    "baseline": {
+      "sampling": {
+        "temperature": 1.0,
+        "top_p": 1.0,
+        "top_k": -1,
+        "repetition_penalty": 1.0
+      }
+    },
+    "sampling": {
+      "sampling": {
+        "temperature": 0.7,
+        "top_p": 0.8,
+        "top_k": 20,
+        "min_p": 0.0,
+        "repetition_penalty": 1.0
+      }
+    },
+    "balanced": {
+      "sampling": {
+        "temperature": 0.7,
+        "top_p": 0.8,
+        "top_k": 20,
+        "min_p": 0.0,
+        "repetition_penalty": 1.0
+      },
+      "rollout_system_prompt": "Solve the task accurately and finish within 8192 output tokens. Use a concise, single solution; do not repeatedly restart or reconsider the same approach. Spend only the necessary space on reasoning and reserve enough space for the complete final answer. Preserve every requested format, language, and length constraint. For programming tasks, give a complete Python program in one closed python code block; check input parsing, variable definitions, edge cases and algorithmic complexity before finishing. For math, finish with the final answer in \\boxed{}. For multiple-choice questions, finish in the exact answer format requested. For instruction-following tasks, output only the requested deliverable with no extra commentary. Stop once the answer is complete."
+    },
+    "presence": {
+      "sampling": {
+        "temperature": 0.7,
+        "top_p": 0.8,
+        "top_k": 20,
+        "min_p": 0.0,
+        "repetition_penalty": 1.0,
+        "presence_penalty": 1.5
+      },
+      "rollout_system_prompt": "Solve the task accurately and finish within 8192 output tokens. Use a concise, single solution; do not repeatedly restart or reconsider the same approach. Spend only the necessary space on reasoning and reserve enough space for the complete final answer. Preserve every requested format, language, and length constraint. For programming tasks, give a complete Python program in one closed python code block; check input parsing, variable definitions, edge cases and algorithmic complexity before finishing. For math, finish with the final answer in \\boxed{}. For multiple-choice questions, finish in the exact answer format requested. For instruction-following tasks, output only the requested deliverable with no extra commentary. Stop once the answer is complete."
+    },
+    "reserve": {
+      "sampling": {
+        "temperature": 0.7,
+        "top_p": 0.8,
+        "top_k": 20,
+        "min_p": 0.0,
+        "repetition_penalty": 1.0
+      },
+      "rollout_system_prompt": "Solve the task accurately and finish within 8192 output tokens. Use a concise, single solution; do not repeatedly restart or reconsider the same approach. Spend only the necessary space on reasoning and reserve enough space for the complete final answer. Preserve every requested format, language, and length constraint. For programming tasks, give a complete Python program in one closed python code block; check input parsing, variable definitions, edge cases and algorithmic complexity before finishing. For math, finish with the final answer in \\boxed{}. For multiple-choice questions, finish in the exact answer format requested. For instruction-following tasks, output only the requested deliverable with no extra commentary. Stop once the answer is complete.",
+      "first_budget": 4096
+    }
+  }
+}

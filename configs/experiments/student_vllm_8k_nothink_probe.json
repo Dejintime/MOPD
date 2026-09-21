@@ -1,0 +1,26 @@
+{
+  "experiment_type": "student_inference_probe",
+  "student": "/home/yangdejin/.cache/huggingface/hub/M2RL-SFT",
+  "inference_backend": "vllm",
+  "enable_thinking": false,
+  "max_new_tokens": 8192,
+  "max_prompt_tokens": 1024,
+  "probe_data": "data/processed/nemotron-clean/probe.jsonl",
+  "domains": ["code", "if", "math", "science"],
+  "samples_per_domain": 3,
+  "seed": 42,
+  "sampling": {"temperature": 1.0, "top_p": 1.0, "top_k": -1, "repetition_penalty": 1.0},
+  "decode_modes": ["greedy", "sampled"],
+  "vllm": {
+    "dtype": "bfloat16",
+    "tensor_parallel_size": 1,
+    "max_model_len": 9216,
+    "gpu_memory_utilization": 0.80,
+    "max_num_seqs": 4,
+    "max_num_batched_tokens": 4096,
+    "enforce_eager": true,
+    "generation_config": "vllm",
+    "enable_prefix_caching": false
+  },
+  "output": "analysis/2026-09-14-vllm-8k-probe/run"
+}

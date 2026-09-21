@@ -1,0 +1,40 @@
+{
+  "experiment_type": "student_inference_probe",
+  "student": "/home/yangdejin/.cache/huggingface/hub/M2RL-SFT",
+  "inference_backend": "vllm",
+  "enable_thinking": false,
+  "max_new_tokens": 8192,
+  "max_prompt_tokens": 1024,
+  "probe_data": "data/processed/nemotron-clean/probe.jsonl",
+  "domains": [
+    "code",
+    "if",
+    "math",
+    "science"
+  ],
+  "samples_per_domain": 3,
+  "seed": 42,
+  "sampling": {
+    "temperature": 1.0,
+    "top_p": 1.0,
+    "top_k": -1,
+    "repetition_penalty": 1.0
+  },
+  "decode_modes": [
+    "sampled"
+  ],
+  "vllm": {
+    "dtype": "bfloat16",
+    "tensor_parallel_size": 1,
+    "max_model_len": 9216,
+    "gpu_memory_utilization": 0.8,
+    "max_num_seqs": 4,
+    "max_num_batched_tokens": 4096,
+    "enforce_eager": true,
+    "generation_config": "vllm",
+    "enable_prefix_caching": false
+  },
+  "output": "analysis/2026-09-14-system-prompt-probe/run",
+  "rollout_system_prompt": "You are a concise answer-producing assistant. Return the requested final deliverable directly. Do not output a thinking section, chain-of-thought, exploratory analysis, plans, alternative attempts, self-dialogue, or repeated derivations. Do not emit <think> or </think> tags. For programming tasks, provide complete runnable solution code in the requested format, without a discussion of how you developed it. For math and multiple-choice tasks, give the final answer with at most a brief justification, rather than a step-by-step derivation. Preserve the required answer format, language, length constraints, and other deliverable requirements. Aim to finish within 2048 output tokens whenever the requested deliverable permits, and never exceed 8192 output tokens. Stop as soon as the deliverable is complete; do not restart, repeat, or reconsider completed material.",
+  "fixed_samples_data": "analysis/2026-09-14-vllm-8k-probe/run/samples.jsonl"
+}
