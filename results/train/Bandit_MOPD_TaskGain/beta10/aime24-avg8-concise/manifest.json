@@ -1,0 +1,51 @@
+{
+  "created_utc": "2026-10-03T04:05:34.374167+00:00",
+  "config_sha256": "69fea1884aeaaf21f62e0db48c3e5569e657b0ba19883e184170924abf7f227e",
+  "num_samples": 8,
+  "datasets": [
+    {
+      "name": "aime24",
+      "n": 30,
+      "num_samples": 8,
+      "source_sha256": "a49b16c0179582e42479719b1eb02e73a31d3dc5c5bd0ae9e580ffcf7e5cff89",
+      "config_sha256": "69fea1884aeaaf21f62e0db48c3e5569e657b0ba19883e184170924abf7f227e",
+      "ids": [
+        "aime24:60",
+        "aime24:61",
+        "aime24:62",
+        "aime24:63",
+        "aime24:64",
+        "aime24:65",
+        "aime24:66",
+        "aime24:67",
+        "aime24:68",
+        "aime24:69",
+        "aime24:70",
+        "aime24:71",
+        "aime24:72",
+        "aime24:73",
+        "aime24:74",
+        "aime24:75",
+        "aime24:76",
+        "aime24:77",
+        "aime24:78",
+        "aime24:79",
+        "aime24:80",
+        "aime24:81",
+        "aime24:82",
+        "aime24:83",
+        "aime24:84",
+        "aime24:85",
+        "aime24:86",
+        "aime24:87",
+        "aime24:88",
+        "aime24:89"
+      ]
+    }
+  ],
+  "versions": {
+    "torch": "2.11.0+cu129",
+    "transformers": "5.16.1",
+    "vllm": "0.22.1+cu129"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "name": "lcb_release_v5",
+  "n": 880,
+  "correct": 619,
+  "accuracy": 0.7034090909090909,
+  "truncated": 185,
+  "truncation_rate": 0.21022727272727273,
+  "mean_tokens": 8413.720454545455,
+  "thinking_unclosed": 163,
+  "infrastructure_errors": 0,
+  "source_results_sha256": "d552ce85a84e9f0512747ad06bd1e7715c1dcc572a55c8f1a7ab4b3c34221dd5"
+}

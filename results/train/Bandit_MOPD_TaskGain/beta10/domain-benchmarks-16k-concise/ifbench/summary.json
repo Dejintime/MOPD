@@ -1,0 +1,16 @@
+{
+  "name": "ifbench",
+  "n": 300,
+  "correct": 163,
+  "accuracy": 0.5433333333333333,
+  "truncated": 3,
+  "truncation_rate": 0.01,
+  "mean_tokens": 2181.67,
+  "thinking_unclosed": 3,
+  "infrastructure_errors": 0,
+  "prompt_strict": 0.5433333333333333,
+  "instruction_strict": 0.5726744186046512,
+  "prompt_loose": 0.5733333333333334,
+  "instruction_loose": 0.6046511627906976,
+  "source_results_sha256": "6595f4da2efa03396df0bb7dbe580dcbdad61b468acfecce5be5dbf2329863f6"
+}

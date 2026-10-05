@@ -1,0 +1,16 @@
+{
+  "name": "ifeval",
+  "n": 541,
+  "correct": 447,
+  "accuracy": 0.8262476894639557,
+  "truncated": 2,
+  "truncation_rate": 0.0036968576709796672,
+  "mean_tokens": 985.7319778188539,
+  "thinking_unclosed": 2,
+  "infrastructure_errors": 0,
+  "prompt_strict": 0.8262476894639557,
+  "instruction_strict": 0.882494004796163,
+  "prompt_loose": 0.8465804066543438,
+  "instruction_loose": 0.8968824940047961,
+  "source_results_sha256": "94a4e40ac7133b9c04ba9e0554a0462d4f64f726a7399c47826942ab3b940d76"
+}

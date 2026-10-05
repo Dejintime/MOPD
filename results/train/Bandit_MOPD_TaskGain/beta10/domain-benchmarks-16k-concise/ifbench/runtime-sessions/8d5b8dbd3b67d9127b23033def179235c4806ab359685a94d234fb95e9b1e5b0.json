@@ -1,0 +1,24 @@
+{
+  "started": "2026-10-04T02:28:33.071578+00:00",
+  "resume_offset": 0,
+  "config_sha256": "0708ca3c766ad3299cdd1bb334e1744c4e351755f667ce6367972e02bdb04a1c",
+  "prompts_sha256": "533695c99a8c7f6bca31b70cb7e71cd5d99872debee2cfcfdae3d21c9a28d6a4",
+  "batch_size": 4,
+  "vllm": {
+    "dtype": "bfloat16",
+    "tensor_parallel_size": 1,
+    "max_model_len": 24576,
+    "gpu_memory_utilization": 0.8,
+    "max_num_seqs": 4,
+    "max_num_batched_tokens": 4096,
+    "enforce_eager": true,
+    "generation_config": "vllm",
+    "enable_prefix_caching": false
+  },
+  "hostname": "hpcc3090-01",
+  "versions": {
+    "torch": "2.11.0+cu129",
+    "transformers": "5.16.1",
+    "vllm": "0.22.1+cu129"
+  }
+}
