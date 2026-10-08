@@ -1,0 +1,12 @@
+{
+  "name": "gpqa_diamond",
+  "n": 198,
+  "correct": 85,
+  "accuracy": 0.4292929292929293,
+  "truncated": 67,
+  "truncation_rate": 0.3383838383838384,
+  "mean_tokens": 9041.015151515152,
+  "thinking_unclosed": 67,
+  "infrastructure_errors": 0,
+  "source_results_sha256": "c2f417d0d1331943eb2ecc8de6380c1b7cdf7d21ecad697030dace24953a732c"
+}

@@ -1,0 +1,7 @@
+{
+  "ready": true,
+  "n": 541,
+  "constraints": 834,
+  "checks": "All source instructions instantiated and strict/loose checks executed on synthetic response; no benchmark predictions used.",
+  "timestamp": "2026-09-16T01:18:48.244938+00:00"
+}

@@ -107,6 +107,15 @@ Bandit MOPD 的训练提示统一取自 NVIDIA 发布的 [Nemotron-3-Nano-RL-Tra
       <td>48.48</td>
     </tr>
     <tr>
+      <td>task_gain (β=1)</td>
+      <td>60.42</td>
+      <td>48.75</td>
+      <td>56.67</td>
+      <td>83.36</td>
+      <td>67.61</td>
+      <td>42.93</td>
+    </tr>
+    <tr>
       <td>MOPD</td>
       <td>62.50</td>
       <td>59.17</td>

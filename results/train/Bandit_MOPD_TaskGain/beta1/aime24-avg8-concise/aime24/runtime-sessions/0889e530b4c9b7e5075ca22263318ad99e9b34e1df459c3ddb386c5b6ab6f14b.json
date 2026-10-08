@@ -1,0 +1,18 @@
+{
+  "started": "2026-10-05T12:47:35.894871+00:00",
+  "resume_questions": 0,
+  "config_sha256": "e980b6ac0d909ba34d83ce8918c13d209c24e1b621994024251890aee54740f7",
+  "num_samples": 8,
+  "vllm": {
+    "dtype": "bfloat16",
+    "tensor_parallel_size": 1,
+    "max_model_len": 24576,
+    "gpu_memory_utilization": 0.9,
+    "max_num_seqs": 6,
+    "max_num_batched_tokens": 8192,
+    "enforce_eager": true,
+    "generation_config": "vllm",
+    "enable_prefix_caching": false
+  },
+  "hostname": "hpcc3090-01"
+}
