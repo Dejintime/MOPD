@@ -89,7 +89,7 @@ Bandit MOPD 的训练提示统一取自 NVIDIA 发布的 [Nemotron-3-Nano-RL-Tra
       <td>45.45</td>
     </tr>
     <tr>
-      <td>Bandit-MOPD (checkpoint-100)</td>
+      <td>Bandit-MOPD without task_gain(β=1, α=0.5, checkpoint-100)</td>
       <td>57.08</td>
       <td>53.75</td>
       <td>56.33</td>
@@ -98,7 +98,7 @@ Bandit MOPD 的训练提示统一取自 NVIDIA 发布的 [Nemotron-3-Nano-RL-Tra
       <td>45.45</td>
     </tr>
     <tr>
-      <td>task_gain (β=10, α=0.5; checkpoint-90)</td>
+      <td>Bandit-MOPD with task_gain (β=10, α=0.5; checkpoint-90)</td>
       <td>62.92</td>
       <td>57.50</td>
       <td>54.33</td>
@@ -107,7 +107,7 @@ Bandit MOPD 的训练提示统一取自 NVIDIA 发布的 [Nemotron-3-Nano-RL-Tra
       <td>48.48</td>
     </tr>
     <tr>
-      <td>task_gain (β=1)</td>
+      <td>Bandit-MOPD with task_gain (β=1, α=0.75; checkpoint-100)</td>
       <td>60.42</td>
       <td>48.75</td>
       <td>56.67</td>
@@ -116,7 +116,7 @@ Bandit MOPD 的训练提示统一取自 NVIDIA 发布的 [Nemotron-3-Nano-RL-Tra
       <td>42.93</td>
     </tr>
     <tr>
-      <td>MOPD</td>
+      <td>raw-MOPD</td>
       <td>62.50</td>
       <td>59.17</td>
       <td>59.33</td>
@@ -133,6 +133,7 @@ Bandit MOPD 的训练提示统一取自 NVIDIA 发布的 [Nemotron-3-Nano-RL-Tra
 
 `RL Teacher` 表示每个 Domain 对应的单领域教师：Math 使用 `M2RL-RL_Math`，Code 使用 `M2RL-RL_Coding`，Science 使用 `M2RL-RL_Science`，Instruction Following 使用 `M2RL-RL_IF`，并非同一个教师跨所有 benchmark 的结果。加粗表示当前已完成实验中的最佳成绩。
 
-Bandit-MOPD `checkpoint-100` 的计数结果为：LiveCodeBench v5 `628/880`、GPQA-Diamond `90/198`、IFEval Prompt Strict `445/541`、IFBench Prompt Strict `169/300`。
+实验设计了两种reward形式，一种是没有task_gain,一种是加入了task_gain。
+当前最接近raw-bandit测评结果的是Bandit-MOPD with task_gain (β=10, α=0.5; checkpoint-90)，但是这个实验的参数β=10，使得参数一边倒，几乎退化成为了单教师。
 
-上述结果采用统一的 16K concise 推理设置：`max_new_tokens=16384`、`temperature=0.6`、`top_p=0.95`、`top_k=20`。完整结果与来源记录见 [benchmark report](analysis/2026-09-20-benchmark-loss-report/report.md)。
+上述结果采用统一的 16K concise 推理设置：`max_new_tokens=16384`、`temperature=0.6`、`top_p=0.95`、`top_k=20`。
