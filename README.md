@@ -137,3 +137,94 @@ Bandit MOPD 的训练提示统一取自 NVIDIA 发布的 [Nemotron-3-Nano-RL-Tra
 当前最接近raw-bandit测评结果的是Bandit-MOPD with task_gain (β=10, α=0.5; checkpoint-90)，但是这个实验的参数β=10，使得参数一边倒，几乎退化成为了单教师。
 
 上述结果采用统一的 16K concise 推理设置：`max_new_tokens=16384`、`temperature=0.6`、`top_p=0.95`、`top_k=20`。
+
+# 主教师＋辅助教师局部修正实验（2026-10-25）
+
+本节记录 `playground` 中最新完成的两轮 200 步实验，区别于前文的四领域组合教师实验。本次只使用 **IF、Math、Code 三个领域**，不训练 Science，也没有评测 GPQA。三组对照均从 `M2RL-SFT` 初始化，采用相同的共同训练设置，并测评各自的 `checkpoint-000200`。
+
+## 实验目的与最新参数
+
+本实验检查：在保留领域主教师监督的基础上，能否选择一位有帮助的辅助教师，通过小幅、局部的分布修正获得互补监督。reward 不使用 `task_gain`、标准答案、任务验证器或独立参考教师。
+
+| 参数 | Naive MOPD k=64 | 上一轮 Bandit | 本轮 Bandit |
+| --- | --- | --- | --- |
+| 主教师 | 按领域固定 | 按领域固定 | 按领域固定 |
+| 辅助教师选择 | 无 | 分领域 LinUCB，辅助教师或不用辅助 | 分领域 LinUCB，辅助教师或不用辅助 |
+| 探索系数 `bandit.alpha` | — | 0.3 | **0.03** |
+| 冲突惩罚系数 `conflict_weight` | — | 0.1 | **0.02** |
+| 学生初始化 | M2RL-SFT | M2RL-SFT | M2RL-SFT |
+| 教师池 | M2RL-IF / M2RL-Math / M2RL-Coding | 同左 | 同左 |
+| 训练步数 / 有效 batch size | 200 / 2 | 200 / 2 | 200 / 2 |
+| 学习率 / weight decay | 2e-6 / 0 | 2e-6 / 0 | 2e-6 / 0 |
+| 梯度裁剪 / 精度 | 1.0 / BF16 | 1.0 / BF16 | 1.0 / BF16 |
+| Prompt / 回答长度上限 | 1024 / 8192 | 1024 / 8192 | 1024 / 8192 |
+| 训练采样 temperature / top-p / top-k | 1.0 / 1.0 / 0 | 1.0 / 1.0 / 0 | 1.0 / 1.0 / 0 |
+| 训练 thinking | 关闭 | 关闭 | 关闭 |
+| 领域调度 | IF → Math → Code 轮换 | 同左 | 同左 |
+| 蒸馏词表支持 | 主教师 top-64 | 主、辅助各 top-64 的去重并集，最多 128 | 同上一轮 |
+| 学生 / 教师计算 | GPU / CPU | GPU / CPU | 物理 GPU 1 / CPU |
+
+本轮只相对上一轮修改了探索系数和冲突惩罚系数；聚合规则、reward 其余部分和共同训练参数保持不变。GPU 0 上的首次尝试因其他进程占用显存，在完成 9 步后失败且没有 checkpoint；最终报告使用的是在物理 GPU 1 上从初始模型重新训练的完整 200 步结果，不拼接失败尝试。
+
+## 技术路线（简述）
+
+1. **学生先作答。** 每步取同一领域的两个 prompt，由当前学生生成回答。教师在学生生成的上下文上提供 next-token 分布，构成 on-policy 蒸馏。
+2. **主教师固定，Bandit 选择辅助。** Math 数据始终使用 Math 主教师，再选择 IF、Code 或不用辅助。context 包括领域标记、平均回答长度、学生预测熵和训练进度。每个领域、每个动作分别学习线性收益模型，选择分数等于“预测 reward＋探索奖励”。当前 context 不读取题目语义，独立领域模型中的领域 one-hot 也是冗余特征。
+3. **每个 token 只允许有限修正。** 监督目标为 `q=(1-alpha)*主教师分布+alpha*辅助教师分布`。alpha 取三个上限的最小值：主教师越不确定，初始预算越大；TV 预算限制整个分布变化；优势保护限制对主教师明确偏好的破坏。alpha 是固定规则计算的，不由 Bandit 直接学习。
+4. **更新学生。** 在两位教师 top-64 的并集上计算广义 reverse-KL，使用完整词表归一化后的原始概率，不对子集重新归一化。两条回答各贡献一半 loss，最后只做一次优化器更新。选择不用辅助时，使用主教师 top-64。
+5. **测量辅助的增量作用。** 从同一学生与 Adam 状态出发，比较“仅主教师的虚拟一步更新”和“主＋辅助的实际一步更新”。在历史诊断前缀上，检查联合更新是否额外沿辅助独有的分布方向移动；虚拟分支评估后恢复参数，不推进真实优化器状态。
+6. **反馈给 Bandit。** reward 为 `B - lambda_C * C - cost`：B 是互补机会乘以实际吸收比例，C 是辅助修正反向于主教师教学方向的程度。本轮 lambda_C=0.02。不用辅助时 reward=0。非测量步使用历史吸收比例估计，再更新所选动作的收益模型。
+
+## 最新最终结果
+
+Macro avg 为 AIME24、AIME25、IFBench、IFEval、LiveCodeBench v5 五项分数的等权算术平均，单位为百分比。
+
+<table>
+  <thead>
+    <tr>
+      <th rowspan="2">Method</th>
+      <th colspan="2">Math</th>
+      <th colspan="2">Instruction Following</th>
+      <th>Code</th>
+      <th rowspan="2">Macro avg</th>
+    </tr>
+    <tr>
+      <th>AIME 2024<br><sub>avg@8</sub></th>
+      <th>AIME 2025<br><sub>avg@8</sub></th>
+      <th>IFBench<br><sub>Prompt Strict</sub></th>
+      <th>IFEval<br><sub>Prompt Strict</sub></th>
+      <th>LiveCodeBench v5<br><sub>pass@1</sub></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Naive MOPD (fixed top-k=64, batch=2, checkpoint-200)</td>
+      <td>66.25</td>
+      <td>57.92</td>
+      <td><strong>59.67</strong></td>
+      <td>85.03</td>
+      <td><strong>74.32</strong></td>
+      <td>68.64</td>
+    </tr>
+    <tr>
+      <td>Auxiliary Bandit＋Local Correction (探索=0.3, 冲突惩罚=0.1, checkpoint-200)</td>
+      <td><strong>67.92</strong></td>
+      <td>58.75</td>
+      <td>59.00</td>
+      <td><strong>85.40</strong></td>
+      <td>73.18</td>
+      <td><strong>68.85</strong></td>
+    </tr>
+    <tr>
+      <td>Auxiliary Bandit＋Local Correction (探索=0.03, 冲突惩罚=0.02, checkpoint-200；本轮)</td>
+      <td>65.42</td>
+      <td><strong>62.08</strong></td>
+      <td>59.00</td>
+      <td>84.84</td>
+      <td>71.93</td>
+      <td>68.65</td>
+    </tr>
+  </tbody>
+</table>
+
+
